@@ -12,6 +12,13 @@ metadata:
   {{- end }}
 spec:
   template:
+    metadata:
+      labels:
+        cluster: {{ template "starrockscluster.name" . }}
+      {{- if .Values.initPassword.annotations }}
+      annotations:
+        {{- toYaml .Values.initPassword.annotations | nindent 8 }}
+      {{- end }}
     spec:
       {{- if or .Values.starrocksFESpec.imagePullSecrets .Values.starrocksCluster.componentValues.imagePullSecrets }}
       imagePullSecrets:
